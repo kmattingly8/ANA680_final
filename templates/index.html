@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Price Predictor</title>
+    <link rel="stylesheet" 
+href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 600px;
+            margin-top: 50px;
+            padding: 30px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #0056b3;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #333;
+        }
+        .form-select, .form-control {
+            border-radius: 8px;
+            box-shadow: none;
+            border-color: #ddd;
+        }
+        .form-select:focus, .form-control:focus {
+            border-color: #0056b3;
+        }
+        .btn-primary {
+            width: 100%;
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 16px;
+        }
+        .btn-primary:hover {
+            background-color: #004085;
+        }
+        .result {
+            margin-top: 30px;
+            font-size: 1.25rem;
+            font-weight: bold;
+            text-align: center;
+            color: #28a745;
+        }
+        .mb-3 {
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Flight Price Predictor</h1>
+
+    <form method="POST" action="/">
+        <!-- Flight Class -->
+        <div class="mb-3">
+            <label for="class" class="form-label">Class</label>
+            <select id="class" name="class" class="form-select" required>
+                <option value="" disabled selected>Select Class</option>
+                <option value="0">Economy</option>
+                <option value="1">Business</option>
+            </select>
+        </div>
+
+        <!-- Airline -->
+        <div class="mb-3">
+            <label for="airline" class="form-label">Airline</label>
+            <select id="airline" name="airline" class="form-select" 
+required>
+                <option value="" disabled selected>Select Airline</option>
+                <option value="0">AirAsia</option>
+                <option value="1">Air_India</option>
+                <option value="2">GO_FIRST</option>
+                <option value="3">Indigo</option>
+                <option value="4">SpiceJet</option>
+                <option value="5">Vistara</option>
+            </select>
+        </div>
+
+        <!-- Duration -->
+        <div class="mb-3">
+            <label for="duration" class="form-label">Duration (in 
+hours)</label>
+            <input type="number" id="duration" name="duration" 
+class="form-control" placeholder="Enter Duration in hours" step="0.1" 
+required>
+        </div>
+
+        <!-- Stops -->
+        <div class="mb-3">
+            <label for="stops" class="form-label">Stops</label>
+            <select id="stops" name="stops" class="form-select" required>
+                <option value="" disabled selected>Select Stops</option>
+                <option value="0">Zero</option>
+                <option value="1">One</option>
+                <option value="2">Two or more</option>
+            </select>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Predict 
+Price</button>
+    </form>
+
+    {% if prediction %}
+        <div class="result">
+            <!-- Display the prediction in INR (Indian Rupees) -->
+            <p>Predicted Flight Price: <strong>₹{{ prediction | round(2) 
+}}</strong></p>
+        </div>
+    {% endif %}
+</div>
+
+<script 
+src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0-alpha1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+
