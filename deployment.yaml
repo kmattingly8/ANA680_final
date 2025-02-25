@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flight-price-predict
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flight-price-predict
+  template:
+    metadata:
+      labels:
+        app: flight-price-predict
+    spec:
+      containers:
+      - name: flight-price-predict
+        image: kmattingly8/flight-price-predict:final
+        ports:
+        - containerPort: 5001

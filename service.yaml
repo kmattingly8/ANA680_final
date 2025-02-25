@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flight-price-predict-service
+spec:
+  selector:
+    app: flight-price-predict
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5001
+  type: LoadBalancer
