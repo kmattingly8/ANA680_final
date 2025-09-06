@@ -56,6 +56,8 @@ The dataset contains several features that are used to predict the price of flig
 ### 8. **Kubernetes Deployment**
 - Created a Kubernetes configuration file to deploy the model on a Kubernetes cluster.
 - Deployed the model to a Kubernetes cluster and exposed it to the web using a service.
+  
+![Kubernetes Deployment Screenshot](Images/Kubernetes_Deployment.png)
 
 ### 9. **Demonstration**
 - Scheduled a demonstration with the instructor via Zoom to showcase the working of the project, including the CI/CD pipeline, Docker containerization, and deployment.
