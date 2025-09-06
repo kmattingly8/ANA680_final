@@ -52,6 +52,7 @@ The dataset contains several features that are used to predict the price of flig
 ### 7. **Recreating the Project in AWS SageMaker Studio Lab**
 - Replicated the entire project using **AWS SageMaker Studio Lab**.
 - Used **containers** to deploy the model within the AWS ecosystem.
+- [View AWS SageMaker Notebook (PDF)](Images/AWS_SageMaker_Notebook.pdf)
 
 ### 8. **Kubernetes Deployment**
 - Created a Kubernetes configuration file to deploy the model on a Kubernetes cluster.
