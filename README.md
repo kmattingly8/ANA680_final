@@ -24,43 +24,168 @@ The dataset contains several features that are used to predict the price of flig
 
 ## Steps Taken in This Project
 
-### 1. **Data Exploration and Cleaning**
-- Performed initial data exploration to understand the structure and distribution of the dataset.
-- Cleaned the data by handling missing values, encoding categorical variables, and normalizing numerical features.
+### 1. 🧹 Data Exploration and Cleaning
 
-### 2. **Feature Engineering and Selection**
-- Created new features from the existing data, including encoding categorical columns such as airline and class.
-- Selected the most important features based on domain knowledge and feature importance techniques.
+- Inspected null values, datatypes, and feature distributions
+- Handled missing values and inconsistent labels
+- Converted date-time features to relevant numerical values (e.g., days left before departure)
 
-### 3. **Data Splitting and Model Training**
-- Split the data into training, validation, and testing datasets.
-- Chose **linear regression** as the algorithm for training the model, as it works well for regression tasks like predicting continuous values.
-- Trained the model using the **sklearn** library and saved the trained model using **joblib**.
+---
 
-### 4. **Deploying the Model Locally with Flask**
+### 2. 🛠️ Feature Engineering and Selection
+
+- Performed **one-hot encoding** for initial feature exploration
+- Conducted **correlation analysis** to determine the strongest predictors:
+
+**Most positively correlated with price:**
+- `class_Business`: +0.94
+- `airline_Vistara`: +0.36
+- `duration`: +0.20
+- `stops_one`: +0.20
+
+**Most negatively correlated:**
+- `class_Economy`: -0.94
+- `airline_Indigo`: -0.28
+- `stops_zero`: -0.19
+
+- Simplified the dataset by retaining only the most impactful features:
+  - `class`, `airline`, `duration`, `stops`
+ 
+---
+
+### 3. 📉 Outlier Detection and Removal
+
+To improve model performance:
+- Created a boxplot of `price` to visualize outliers:
+  ![Price Distribution Screenshot](Images/Price_Distribution.png)
+  
+- Used the IQR method to remove price outliers:
+
+```python
+Q1 = df['price'].quantile(0.25)
+Q3 = df['price'].quantile(0.75)
+IQR = Q3 - Q1
+
+lower_bound = Q1 - 1.5 * IQR
+upper_bound = Q3 + 1.5 * IQR
+
+df_cleaned = df_filtered[(df['price'] >= lower_bound) & (df['price'] <= upper_bound)]
+```
+
+---
+
+### 4. 🔄 Feature Encoding for Modeling
+
+To reduce model complexity and improve performance:
+
+Replaced one-hot encoding with label encoding:
+
+```python
+from sklearn.preprocessing import LabelEncoder
+
+label_encoder = LabelEncoder()
+df_cleaned['airline'] = label_encoder.fit_transform(df_cleaned['airline'])
+df_cleaned['class'] = df_cleaned['class'].map({'Economy': 0, 'Business': 1}).astype(int)
+df_cleaned['stops'] = df_cleaned['stops'].map({'zero': 0, 'one': 1, 'two_or_more': 2}).astype(int)
+```
+
+---
+
+### 5. 🤖 Model Training and Evaluation
+
+Used two approaches:
+
+- **Baseline**: Linear Regression  
+- **Optimized**: Decision Tree Regressor with hyperparameter tuning
+
+#### 📌 RandomizedSearchCV for Decision Tree
+
+```python
+from sklearn.model_selection import RandomizedSearchCV
+
+param_grid = {
+    'criterion': ['squared_error', 'absolute_error'],
+    'max_depth': [3, 5, 10, None],
+    'max_features': ['sqrt', 'log2', None],
+    'min_samples_split': [2, 5, 10],
+    'min_samples_leaf': [1, 2, 4],
+}
+
+random_search = RandomizedSearchCV(model, param_distributions=param_grid, 
+                                   n_iter=10, cv=3,
+                                   scoring='neg_mean_squared_error', 
+                                   n_jobs=-1, verbose=1, random_state=88)
+
+random_search.fit(X_train, y_train)
+```
+
+**Best Parameters Found:**
+
+```text
+{
+  'min_samples_split': 2,
+  'min_samples_leaf': 4,
+  'max_features': 'log2',
+  'max_depth': None,
+  'criterion': 'squared_error'
+}
+```
+
+#### 📊 Model Evaluation
+
+| Metric       | Decision Tree | Linear Regression |
+|--------------|----------------|------------------|
+| R² Score     | ~0.85          | ~0.85            |
+| MAE          | 3,523          | 1,500            |
+| RMSE         | 5,361          | 2,000            |
+
+While Decision Tree had more complexity, Linear Regression performed better on unseen data — likely due to lower overfitting. Therefore, decided to move forward with deploying Linear Regression model. Saved model using **joblib**.
+
+---
+
+### 6. 🌐 Local Deployment with Flask
+
 - Created a Flask application that exposes the trained model as a web API.
-- The API allows users to make POST requests with flight features and receive predicted flight prices.
+- The API allows users to make POST requests with flight features and receive predicted flight prices. 
+- Tested locally on `localhost:5000`
 
-### 5. **Containerizing the Model with Docker**
+---
+
+### 7. 🐳 Containerization with Docker
+
 - Dockerized the Flask application so it could be easily deployed in any environment.
-- Pushed the Docker image to **Docker Hub** for distribution and deployment.
+- Pushed the Docker image to **Docker Hub** for distribution and deployment. 
+- Tested containerized deployment:
 
-### 6. **CI/CD Pipeline and Heroku Deployment**
+```bash
+docker build -t flight-price-app .
+docker run -p 5000:5000 flight-price-app
+```
+
+---
+
+### 8. **CI/CD Pipeline and Heroku Deployment**
 - Implemented a CI/CD pipeline using GitHub Actions to automate testing and deployment.
 - Deployed the Flask application with the trained model on **Heroku** for easy access over the internet.
 
-### 7. **Recreating the Project in AWS SageMaker Studio Lab**
+---
+
+### 9. **Recreating the Project in AWS SageMaker Studio Lab**
 - Replicated the entire project using **AWS SageMaker Studio Lab**.
 - Used **containers** to deploy the model within the AWS ecosystem.
 - [View AWS SageMaker Notebook (PDF)](Images/AWS_Deployment.pdf)
 
-### 8. **Kubernetes Deployment**
+---
+
+### 10. **Kubernetes Deployment**
 - Created a Kubernetes configuration file to deploy the model on a Kubernetes cluster.
 - Deployed the model to a Kubernetes cluster and exposed it to the web using a service.
   
 ![Kubernetes Deployment Screenshot](Images/Kubernetes_Deployment.png)
 
-### 9. **Demonstration**
+---
+
+### 11. **Demonstration**
 - Scheduled a demonstration with the instructor via Zoom to showcase the working of the project, including the CI/CD pipeline, Docker containerization, and deployment.
 
 ## Key Technologies Used
