@@ -57,7 +57,8 @@ The dataset contains several features that are used to predict the price of flig
 
 To improve model performance:
 - Created a boxplot of `price` to visualize outliers:
-  ![Price Distribution Screenshot](Images/Price_Distribution.png)
+  <img src="Images/Price_Distribution.png" alt="Price Distribution Boxplot" width="33%">
+
   
 - Used the IQR method to remove price outliers:
 
@@ -187,6 +188,8 @@ docker run -p 5000:5000 flight-price-app
 
 ### 11. **Demonstration**
 - Scheduled a demonstration with the instructor via Zoom to showcase the working of the project, including the CI/CD pipeline, Docker containerization, and deployment.
+
+---
 
 ## Key Technologies Used
 
