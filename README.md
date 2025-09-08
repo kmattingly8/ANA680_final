@@ -57,7 +57,8 @@ The dataset contains several features that are used to predict the price of flig
 
 To improve model performance:
 - Created a boxplot of `price` to visualize outliers:
-  <img src="Images/Price_Distribution.png" alt="Price Distribution Boxplot" width="33%">
+  
+  <img src="Images/Price_Distribution.png" alt="Price Distribution Boxplot" width="40%">
 
   
 - Used the IQR method to remove price outliers:
