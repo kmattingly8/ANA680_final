@@ -1,12 +1,45 @@
 # Flight Price Prediction Model
 
-## Overview
+## 📌 Overview
 
-This project involves the creation of a machine learning model that predicts flight prices based on input features such as **class**, **airline**, **duration**, and **number of stops**. The project covers the full development lifecycle from data exploration and preprocessing to deployment in various environments such as **Flask**, **Docker**, **Heroku**, **AWS SageMaker**, and **Kubernetes**.
+This project demonstrates the end-to-end development and deployment of a machine learning system designed to **predict flight prices** based on features such as **class, airline, flight duration, number of stops**, and more.
 
-## Problem Statement
+The workflow follows the complete machine learning lifecycle:
 
-In the airline industry, understanding and predicting flight prices can be a challenging task, as prices fluctuate depending on multiple factors. This project aims to build a machine learning model that predicts flight prices based on key input features.
+- **Exploratory Data Analysis (EDA)** to understand trends and outliers
+- **Feature engineering** to transform and optimize input variables
+- **Model selection and tuning**, including baseline and optimized regressors
+- **Evaluation** using MAE, RMSE, and R² metrics
+- **Deployment** via multiple technologies to demonstrate versatility
+
+The model was deployed in various environments, showcasing both software engineering and MLOps skills:
+
+- ✅ **Local deployment** using a RESTful Flask API
+- 🐳 **Containerization** with Docker for portability
+- 🔁 **CI/CD pipeline** with GitHub Actions for automation
+- ☁️ **Cloud deployment** using Heroku and AWS SageMaker
+- ☸️ **Production-grade orchestration** using Kubernetes
+
+This project simulates a **real-world machine learning workflow**, from raw data to production-ready service, and highlights both technical and deployment capabilities across the ML stack.
+
+
+## 🧠 What This Project Demonstrates
+
+- ✅ **End-to-End Data Science Pipeline**: From raw data ingestion and feature engineering to model selection, tuning, and evaluation.
+- 🧪 **Applied Machine Learning**: Used regression models with performance tuning and evaluation using MAE, RMSE, and R² metrics.
+- 🔁 **MLOps Workflow**: Integrated CI/CD pipelines with GitHub Actions for automated testing and deployment.
+- 🐳☁️ **Cloud-Native Deployment**: Dockerized the application, deployed on **Heroku**, **AWS SageMaker**, and **Kubernetes**.
+- 📈 **Model Interpretability**: Correlation analysis and feature importance explored for model transparency.
+
+
+## 🎯 Problem Statement
+
+Airline pricing is dynamic and influenced by multiple factors such as demand, competition, and booking windows. This project aims to predict flight prices using machine learning to support:
+
+- 🧳 **Consumers** in making cost-effective booking decisions
+- 🏢 **Travel platforms and airlines** in building dynamic pricing engines
+- 📊 **Data teams** in understanding price drivers and optimizing promotions
+
 
 ### Why Machine Learning?
 Machine learning is a great tool to predict flight prices because it can handle large datasets with multiple variables and uncover hidden relationships between features. By using machine learning, we can develop a model that predicts flight prices accurately and at scale, assisting both consumers and airlines in better understanding flight pricing patterns.
@@ -165,7 +198,16 @@ random_search.fit(X_train, y_train)
 | MAE          | 3,523          | 1,500            |
 | RMSE         | 5,361          | 2,000            |
 
-While Decision Tree had more complexity, Linear Regression performed better on unseen data — likely due to lower overfitting. Therefore, decided to move forward with deploying Linear Regression model. Saved model using **joblib**.
+
+### 📌 Model Selection Rationale
+
+Although Decision Tree Regressor achieved comparable R², its higher variance and complexity made it less generalizable. Therefore, **Linear Regression** was selected for deployment due to:
+
+- Lower risk of overfitting
+- More interpretable coefficients
+- Comparable or better performance on the test set
+
+Saved model using **joblib**.
 
 ---
 
