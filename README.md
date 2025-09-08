@@ -11,16 +11,40 @@ In the airline industry, understanding and predicting flight prices can be a cha
 ### Why Machine Learning?
 Machine learning is a great tool to predict flight prices because it can handle large datasets with multiple variables and uncover hidden relationships between features. By using machine learning, we can develop a model that predicts flight prices accurately and at scale, assisting both consumers and airlines in better understanding flight pricing patterns.
 
-## Dataset
+## 📊 Dataset
 
-The dataset used for this project is a **flight price prediction** dataset available on Kaggle. The dataset can be accessed here:
-[Flight Price Prediction 2025 Regression](https://www.kaggle.com/code/didanfariz/flight-price-prediction-2025-regression)
+The dataset used in this project is the **Flight Price Prediction 2025 Regression** dataset, available on [Kaggle](https://www.kaggle.com/code/didanfariz/flight-price-prediction-2025-regression).
 
-The dataset contains several features that are used to predict the price of flights, including:
-- **Class** (Economy, Business, First Class)
-- **Airline** (Carrier of the flight)
-- **Duration** (Time taken for the flight)
-- **Number of Stops** (Direct, 1 stop, or more)
+It contains **300,153 flight records** with **12 columns**, covering both categorical and numerical features relevant to flight pricing.
+
+### 🔢 Dataset Overview
+
+| Column Name        | Data Type | Description |
+|--------------------|-----------|-------------|
+| `Unnamed: 0`       | `int64`   | Index column (can be ignored) |
+| `airline`          | `object`  | Name of the airline (e.g., Air India, Vistara, Indigo) |
+| `flight`           | `object`  | Flight number (used for identification only) |
+| `source_city`      | `object`  | Departure city |
+| `departure_time`   | `object`  | Time of departure (Morning, Night, etc.) |
+| `stops`            | `object`  | Number of stops (`zero`, `one`, `two_or_more`) |
+| `arrival_time`     | `object`  | Time of arrival |
+| `destination_city` | `object`  | Arrival city |
+| `class`            | `object`  | Travel class (`Economy`, `Business`) |
+| `duration`         | `float64` | Total duration of the flight in hours |
+| `days_left`        | `int64`   | Days left until the departure date (proxy for booking lead time) |
+| `price`            | `int64`   | Target variable — ticket price in INR |
+
+### ✅ Key Features Used for Modeling
+
+After exploratory analysis and correlation inspection, the following features were found to be most influential in predicting flight price:
+
+- **`class`**: Strongest predictor of price — Business class is significantly more expensive than Economy.
+- **`airline`**: Pricing strategies vary greatly between carriers.
+- **`duration`**: Longer flights tend to be priced higher.
+- **`stops`**: More stops generally correlate with lower ticket prices, but not always linearly.
+
+These selected features were used to train the final machine learning model.
+
 
 ## Steps Taken in This Project
 
